@@ -1,0 +1,46 @@
+table tbody tr td .form-control[readonly] {
+    background-color: transparent !important;
+    opacity: 1;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+
+table.table tr td {
+	min-width: 160px;
+}
+
+table.table tr {
+	white-space: nowrap;
+}
+
+.panel .panel-heading .fluigicon {
+	padding-right: 12px;
+    font-size: 18px;
+}
+
+.table, .table-responsive {
+    margin-bottom: 0 !important;
+}
+
+.btn-group .btn.active {
+	background-color: #5cb85c !important;
+	border-color: #4cae4c !important;
+	color: #fff !important;
+}
+
+.btn-group .btn:nth-child(2).active {
+    background-color: #d9534f !important;
+	border-color: #d43f3a !important;
+}
+
+@media (max-width: 767px) {
+	.btn-group .btn {
+		width: 50% !important;
+	}
+	
+	.btn-group {
+		width: 100% !important;
+	}
+}

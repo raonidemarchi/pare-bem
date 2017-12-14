@@ -1,0 +1,223 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="select2.min.css">
+		<link rel="stylesheet" href="select2-bootstrap.min.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	
+	<body>
+		<div class="container">
+			<img style="position: absolute; top: 15;" width="80" src="logo.png">
+			<h1 style="padding: 20px 0 20px 100px;">Solicitação de Compra</h1>
+		
+			<form name="form" role="form">
+
+		        <div class="panel panel-default">
+		            <div class="panel-heading">
+		            	<span class="glyphicon glyphicon-tag" style="margin-right: 10px;"></span>
+		            	Solicitação de Compra
+	            	</div>
+		
+		            <div class="panel-body">
+		                <div class="row">
+		                    <div class="col-sm-12 col-md-6">
+		                        <div class="form-group">
+		                            <label for="solicitante">Solicitante</label>
+		                            <input type="text" class="form-control" name="solicitante" id="solicitante" value="Nome do usário logado" disabled>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="col-xs-12 col-sm-6 col-md-3">
+		                        <div class="form-group">
+		                            <label for="numeroSolicitacao">Nº SC</label>
+		                            <input type="text" name="numeroSolicitacao" id="numeroSolicitacao" class="form-control" value="000049" disabled>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="col-xs-12 col-sm-6 col-md-3">
+		                        <div class="form-group">
+		                            <label for="dataEmissao">Data de Emissão</label>
+									<input id="dataEmissao" type="text" class="form-control" disabled>
+		                        </div>
+		                    </div>
+		                </div><!-- /.row -->
+		
+		                <div class="row">
+		                	<div class="col-sm-12 col-md-6">
+		                        <div class="form-group">
+		                            <label for="empresa">Unidade Requisitante</label>
+		                            <select class="form-control">
+										<option>Selecione...</option>
+										<option>01 - Unidade</option>
+										<option>02 - Unidade</option>
+										<option>03 - Unidade</option>
+										<option>04 - Unidade</option>
+										<option>05 - Unidade</option>
+									</select>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="col-xs-12 col-sm-6 col-md-3">
+		                        <div class="form-group">
+		                            <label for="filial">Comprador</label>
+		                            <select class="form-control">
+										<option>Selecione...</option>
+										<option>01 - Comprador</option>
+										<option>02 - Comprador</option>
+										<option>03 - Comprador</option>
+										<option>04 - Comprador</option>
+										<option>05 - Comprador</option>
+									</select>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="col-xs-12 col-sm-6 col-md-3">
+		                        <div class="form-group">
+		                            <label for="vencimento">Filial de Entrega</label>
+		                            <select class="form-control">
+										<option>Selecione...</option>
+										<option>0101 - Filial</option>
+										<option>0201 - Filial</option>
+										<option>0301 - Filial</option>
+										<option>0401 - Filial</option>
+										<option>0501 - Filial</option>
+									</select>
+		                        </div>
+		                    </div>
+	                    </div><!-- /.row -->
+					</div><!-- /.panel-body -->
+				</div><!-- /.panel -->
+					
+				<div class="panel panel-default">
+		            <div class="panel-heading">
+		            	<span class="glyphicon glyphicon-list" style="margin-right: 10px;"></span>
+		            	Itens <span class="pull-right">Total: <span id="totalItens">1</span></span>
+	            	</div>
+					
+					<div id="itens">
+						<div class="item">
+							<div class="panel-body">
+								<span class="glyphicon glyphicon-remove pull-right text-muted" style="cursor: pointer;" onclick="removeItem(this)"></span>
+								
+								<h4>Item #0001</h4>
+								
+								<br>
+								
+								<div class="row">
+									<div class="col-xs-12 col-sm-4 col-md-3">
+										<div class="form-group">
+											<label>Produto</label>
+											<select class="form-control">
+												<option>Selecione...</option>
+												<option>1029 - Produto 1</option>
+												<option>7683 - Produto 2</option>
+												<option>9238 - Produto 3</option>
+												<option>4356 - Produto 4</option>
+												<option>1234 - Produto 5</option>
+											</select>
+										</div>
+									</div>
+								
+									<div class="col-xs-12 col-sm-8 col-md-9">
+										<div class="form-group">
+											<label>Descrição</label>
+											<input type="text"class="form-control">
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="form-group">
+											<label>Quantidade</label>
+											<input type="number" class="form-control">
+										</div>
+									</div>
+								
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="form-group">
+											<label>Centro de Custo</label>
+											<select class="form-control">
+												<option>Selecione...</option>
+												<option>1029 - Centro de Custo 1</option>
+												<option>7683 - Centro de Custo 2</option>
+												<option>9238 - Centro de Custo 3</option>
+												<option>4356 - Centro de Custo 4</option>
+												<option>1234 - Centro de Custo 5</option>
+											</select>
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="form-group">
+											<label>Classe de Valor</label>
+											<select class="form-control">
+												<option>Selecione...</option>
+												<option>1029 - Classe de Valor 1</option>
+												<option>7683 - Classe de Valor 2</option>
+												<option>9238 - Classe de Valor 3</option>
+												<option>4356 - Classe de Valor 4</option>
+												<option>1234 - Classe de Valor 5</option>
+											</select>
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-6 col-md-3">
+										<div class="form-group">
+											<label>Necessidade</label>
+											<input type="date" class="form-control">
+										</div>
+									</div>
+								</div>
+							</div><!-- /.panel-body -->
+						
+							<hr>
+						</div><!-- /.item -->
+					</div><!-- /#itens -->
+
+					<div class="panel-body">
+						<button type="button" class="btn btn-default pull-right" onclick="addItem()">
+							<span class="glyphicon glyphicon-plus"></span> &nbsp;Item
+						</button>
+					</div><!-- /. panel-body -->
+		        </div><!-- /.panel -->
+		        
+				<br>
+				<hr>
+				
+				<h3>Mecanismo de aprovação</h3>
+				<br>
+   				<div class="row">
+					<div class="col-xs-12 form-group">
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input type="radio"	name="aprovar" id="aprovado" value="1">
+								Aprovado
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="aprovar" id="reprovado" value="2">
+								Reprovado
+							</label>
+						</div>
+					</div>
+
+					<div id="justificativaDiv" class="col-xs-12" hidden>
+						<label for="justificativa">Justificativa</label>
+						<textarea name="justificativa" id="justificativa" rows="6" class="form-control" hidden></textarea>
+					</div>
+				</div>
+				
+				<input type="hidden" name="codigoTecnico" id="codigoTecnico">
+				<input type="hidden" name="codigoCentroCusto" id="codigoCentroCusto">
+				<input type="hidden" name="codigoAprovadorMaterialTI" id="codigoAprovadorMaterialTI">
+			</form>
+		</div>
+	</body>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="select2.min.js"></script>
+	<script type="text/javascript" src="select2-i18n-pt-Br.js"></script>
+	<script type="text/javascript" src="formScript.js"></script>
+</html>
