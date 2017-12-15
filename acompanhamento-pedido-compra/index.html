@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Auditoria Intercâmbio</title>
+	<title>Acompanhamento Pedidos de Compra</title>
 
 	<!-- Última versão CSS compilada e minificada -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -14,6 +14,40 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.bootstrap.min.css">
+	
+	<style>
+		body {
+			font-size: 12px !important;
+		}
+		
+		.circulo {
+	
+			border-radius: 200px;
+			width: 10px; height: 10px;
+			position:relative;
+			top: 0; left: 0;
+			display: inline-block !important;
+
+		}
+		
+		.circulo-success {
+			background-color: #5cb85c;
+		}
+		
+		.circulo-waiting {
+			background-color: #FFEB3B;
+		}
+		
+		.circulo-warning {
+			background-color: #f0ad4e;
+		}
+		
+		.circulo-danger {
+			background-color: #d9534f;
+		}		
+		
+		
+	</style>
 </head>
 
 <body>
@@ -21,7 +55,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<img style="position: absolute; top: 15;" width="80" src="logo.png">
-				<h1 style="padding: 20px 0 20px 100px;">Fechamento de Contas</h1>
+				<h1 style="padding: 20px 0 20px 100px;">Pedidos de Compra</h1>
 			</div>
 		</div>
 		
@@ -29,60 +63,34 @@
 		
 		<div class="row">
 			<div class="col-md-12">
-					<div class="panel">
-						
-						<div class="table-responsive">
-							<table id="example" class="table table-striped table-bordered table-hover text-center" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>Solicitação</th>
-										<!-- <th>Localização</th> -->
-										<th>Status</th>
-										<th>Unidade</th>
-										<th>Prestador</th>
-										<th>Transação</th>
-										<th>Ano/Número Fatura</th>
-										<th>Lote</th>
-										<th>Série Doc</th>
-										<th>Doc</th>
-										<th>Vencimento</th>
-										<th>Valor</th>
-										<th>Grupo</th>
-										<th>Período</th>
-										<th>Paciente</th>
-										<th>Guia/Ano</th>
-										<th>Data Importação</th>
-										<th>Alta Administrativa</th>
-									</tr>
-								</thead>
-								<tbody id="corpoTabela"></tbody>
-								<tfoot>
-									<tr>
-										<th>Solicitação</th>
-										<!-- <th>Localização</th> -->
-										<th>Status</th>
-										<th>Unidade</th>
-										<th>Prestador</th>
-										<th>Transação</th>
-										<th>Ano/Número Fatura</th>
-										<th>Lote</th>
-										<th>Série Doc</th>
-										<th>Doc</th>
-										<th>Vencimento</th>
-										<th>Valor</th>
-										<th>Grupo</th>
-										<th>Período</th>
-										<th>Paciente</th>
-										<th>Guia/Ano</th>
-										<th>Data Importação</th>
-										<th>Alta Administrativa</th>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
-						<!-- /.table-responsive -->
-					</div>
-					<!-- /.panel -->
+				<div class="table-responsive">
+					<table id="example" class="table table-striped table-bordered table-hover text-center" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th width="5%">Pedido</th>
+								<th width="10%">Comprador</th>
+								<th width="15%">Fornecedor</th>
+								<th width="5%">Telefone</th>
+								<th width="5%">Emissão</th>
+								<th width="10%">E-mail</th>
+								<th width="30%">Situação</th>
+							</tr>
+						</thead>
+						<tbody id="corpoTabela"></tbody>
+						<tfoot>
+							<tr>
+								<th>Pedido</th>
+								<th>Comprador</th>
+								<th>Fornecedor</th>
+								<th>Telefone</th>
+								<th>Emissão</th>
+								<th>E-mail</th>
+								<th>Situação</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<!-- /.table-responsive -->
 			</div>
 			<!-- /.col-md-12 -->
 		</div>
@@ -102,22 +110,49 @@
 	<script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.colVis.min.js" charset="utf-8"></script>
 
 	<script>
+			Number.prototype.pad = function(size) {
+				let s = String(this);
+				while (s.length < (size || 2)) {s = "0" + s;}
+				return s;
+			}
+			
 			// Setup - add a text input to each footer cell
 			$('#example tfoot th').each(function() {
 				var title = $(this).text();
 				$(this).html('<input type="text" style="width: 100%;" class="form-control">');
 			});
 
+			data = []
+			for(let i = 0; i < 15; i++) {
+				let indiceFornecedor = Math.floor(Math.random() * 3);
+				data.push([					
+					Math.floor(Math.random() * 100000) + 1,
+					['JOSIAS CARMO', 'RODRIGO PEIXOTO', 'ANA LUISA', 'MARIA SILVA'][Math.floor(Math.random() * 4)],
+					['SUPRICORP SUPRIMENTOS LTDA', 'IVTS SOLUÇÕES E SISTEMAS', 'GARAGEM 1 LTDA'][indiceFornecedor],
+					'(11)' + (Math.floor(Math.random() * 79999999) + 20000000),
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017',
+					['olive@supricorp.com.br', 'grad@ivts.com.br', 'canvas@garagem1.com.br'][indiceFornecedor],
+					['<div class="circulo circulo-success"></div> RONIE.COELHO - Aprovado<br>',
+					'<div class="circulo circulo-waiting"></div> SUELI.CARNEIRO - Aguardando<br>',
+					'<div class="circulo circulo-warning"></div> MARTA.RODRIGUES - Em Aprovacao<br>',
+					'<div class="circulo circulo-danger"></div> RAFAEL.SOUZA - Reprovado - <span class="text-muted">Dados incorretos</span> <br>'
+					][Math.floor(Math.random() * 4)] + [
+					'',
+					'',
+					'<div class="circulo circulo-waiting"></div> MURILO.SILVA - Aguardando<br>',
+					'<div class="circulo circulo-warning"></div> MONICA.SANTANA - Em Aprovacao<br>',
+					][Math.floor(Math.random() * 4)]
+				]);
+			}
+			
 			var table = $('#example').DataTable({
+			data: data,
 				dom: 'Bfrtip',
 				"columnDefs": [{
-					targets: 0,
-					className: 'noVis'
+					targets: 6,
+					className: 'text-left'
 				}],
-				"buttons": [{
-					extend: 'colvis',
-					columns: ':not(.noVis)'
-				}],
+				"buttons": [],
 				"language": {
 					"sEmptyTable": "Nenhum registro encontrado",
 					"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -144,7 +179,7 @@
 			});
 
 			$('#example tfoot tr').insertAfter($('#example thead tr'));
-
+			
 			// Apply the search
 			table.columns().every(function() {
 				var that = this;
@@ -155,7 +190,7 @@
 					}
 				});
 			});
-
+			
 		</script>
 	
 	</body>
