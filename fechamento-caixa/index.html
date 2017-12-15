@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Auditoria Intercâmbio</title>
+	<title>Fechamento de Contas</title>
 
 	<!-- Última versão CSS compilada e minificada -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<img style="position: absolute; top: 15;" width="80" src="logo.png">
+				<img style="position: absolute; top: 15px;" width="80" src="logo.png">
 				<h1 style="padding: 20px 0 20px 100px;">Fechamento de Contas</h1>
 			</div>
 		</div>
@@ -36,128 +36,132 @@
 								<thead>
 									<tr>
 										<th>Solicitação</th>
-										<!-- <th>Localização</th> -->
-										<th>Status</th>
-										<th>Unidade</th>
-										<th>Prestador</th>
-										<th>Transação</th>
-										<th>Ano/Número Fatura</th>
-										<th>Lote</th>
-										<th>Série Doc</th>
-										<th>Doc</th>
-										<th>Vencimento</th>
-										<th>Valor</th>
-										<th>Grupo</th>
-										<th>Período</th>
-										<th>Paciente</th>
-										<th>Guia/Ano</th>
-										<th>Data Importação</th>
-										<th>Alta Administrativa</th>
+										<th>Dia</th>
+										<th>Data da Competência</th>
+										<th>Garagem</th>
+										<th>Qt SEM PARAR</th>
+										<th>Vl SEM PARAR</th>
+										<th>Qt ConnectCar</th>
+										<th>Vl ConnectCar</th>
+										<th>Total Tags</th>
+										<th>Início</th>
+										<th>Término</th>
 									</tr>
 								</thead>
 								<tbody id="corpoTabela"></tbody>
 								<tfoot>
 									<tr>
 										<th>Solicitação</th>
-										<!-- <th>Localização</th> -->
-										<th>Status</th>
-										<th>Unidade</th>
-										<th>Prestador</th>
-										<th>Transação</th>
-										<th>Ano/Número Fatura</th>
-										<th>Lote</th>
-										<th>Série Doc</th>
-										<th>Doc</th>
-										<th>Vencimento</th>
-										<th>Valor</th>
-										<th>Grupo</th>
-										<th>Período</th>
-										<th>Paciente</th>
-										<th>Guia/Ano</th>
-										<th>Data Importação</th>
-										<th>Alta Administrativa</th>
+										<th>Dia</th>
+										<th>Data da Competência</th>
+										<th>Garagem</th>
+										<th>Qt SEM PARAR</th>
+										<th>Vl SEM PARAR</th>
+										<th>Qt ConnectCar</th>
+										<th>Vl ConnectCar</th>
+										<th>Total Tags</th>
+										<th>Início</th>
+										<th>Término</th>
 									</tr>
 								</tfoot>
 							</table>
-						</div>
-						<!-- /.table-responsive -->
-					</div>
-					<!-- /.panel -->
-			</div>
-			<!-- /.col-md-12 -->
-		</div>
-		<!-- /.row -->
-		</div>
-		
-		
-	</div>
-	<!-- /.container-fluid -->
+						</div><!-- /.table-responsive -->
+					</div><!-- /.panel -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->	
+	</div><!-- /.container-fluid -->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js" charset="utf-8"></script>
-	<script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.bootstrap.min.js" charset="utf-8"></script>
-	<script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.colVis.min.js" charset="utf-8"></script>
-
+	<script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js" charset="utf-8"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.bootstrap.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js" charset="utf-8"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.html5.min.js" charset="utf-8"></script>
+	
 	<script>
-			// Setup - add a text input to each footer cell
-			$('#example tfoot th').each(function() {
-				var title = $(this).text();
-				$(this).html('<input type="text" style="width: 100%;" class="form-control">');
-			});
+		'use strict'
+		
+		// Setup - add a text input to each footer cell
+		$('#example tfoot th').each(function() {
+			var title = $(this).text();
+			$(this).html('<input type="text" style="width: 100%;" class="form-control">');
+		});
+		
+		Number.prototype.pad = function(size) {
+			let s = String(this);
+			while (s.length < (size || 2)) {s = "0" + s;}
+			return s;
+		}
 
-			var table = $('#example').DataTable({
-				dom: 'Bfrtip',
-				"columnDefs": [{
-					targets: 0,
-					className: 'noVis'
-				}],
-				"buttons": [{
-					extend: 'colvis',
-					columns: ':not(.noVis)'
-				}],
-				"language": {
-					"sEmptyTable": "Nenhum registro encontrado",
-					"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-					"sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-					"sInfoFiltered": "(Filtrados de _MAX_ registros)",
-					"sInfoPostFix": "",
-					"sInfoThousands": ".",
-					"sLengthMenu": "_MENU_ resultados por página",
-					"sLoadingRecords": "Carregando...",
-					"sProcessing": "Processando...",
-					"sZeroRecords": "Nenhum registro encontrado",
-					"sSearch": "Pesquisar",
-					"oPaginate": {
-						"sNext": "Próximo",
-						"sPrevious": "Anterior",
-						"sFirst": "Primeiro",
-						"sLast": "Último"
-					},
-					"oAria": {
-						"sSortAscending": ": Ordenar colunas de forma ascendente",
-						"sSortDescending": ": Ordenar colunas de forma descendente"
-					}
+		// dados
+		let data = [];
+		
+		for(let i = 0; i < 201; i++) {
+			data.push([
+				Math.floor(Math.random() * 100000) + 1,
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
+				['Garagem 1 LTDA', 'Garagem 2 LTDA', 'Garagem 3 LTDA', 'Garagem 4 LTDA'][Math.floor(Math.random() * 3) + 1],
+				(Math.floor(Math.random() * 9500) + 500),
+				'R$ ' + (Math.floor(Math.random() * 49000) + 1000) + ',00',
+				(Math.floor(Math.random() * 9500) + 500),
+				'R$ ' + (Math.floor(Math.random() * 49000) + 1000) + ',00',
+				(Math.floor(Math.random() * 19000) + 1000),
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017',
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 5) + 7).pad(2) + '/2017'
+			]);
+		}
+		
+		var table = $('#example').DataTable({
+			dom: 'Bfrtip',
+			buttons: [
+				'copyHtml5',
+				'excelHtml5',
+				'csvHtml5',
+				'pdfHtml5'
+			],
+			data: data,
+			"language": {
+				"sEmptyTable": "Nenhum registro encontrado",
+				"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+				"sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+				"sInfoFiltered": "(Filtrados de _MAX_ registros)",
+				"sInfoPostFix": "",
+				"sInfoThousands": ".",
+				"sLengthMenu": "_MENU_ resultados por página",
+				"sLoadingRecords": "Carregando...",
+				"sProcessing": "Processando...",
+				"sZeroRecords": "Nenhum registro encontrado",
+				"sSearch": "Pesquisar",
+				"oPaginate": {
+					"sNext": "Próximo",
+					"sPrevious": "Anterior",
+					"sFirst": "Primeiro",
+					"sLast": "Último"
+				},
+				"oAria": {
+					"sSortAscending": ": Ordenar colunas de forma ascendente",
+					"sSortDescending": ": Ordenar colunas de forma descendente"
+				}
+			}
+		});
+
+		$('#example tfoot tr').insertAfter($('#example thead tr'));
+
+		// Apply the search
+		table.columns().every(function() {
+			var that = this;
+
+			$('input', this.footer()).on('keyup change', function() {
+				if (that.search() !== this.value) {
+					that.search(this.value).draw();
 				}
 			});
-
-			$('#example tfoot tr').insertAfter($('#example thead tr'));
-
-			// Apply the search
-			table.columns().every(function() {
-				var that = this;
-
-				$('input', this.footer()).on('keyup change', function() {
-					if (that.search() !== this.value) {
-						that.search(this.value).draw();
-					}
-				});
-			});
-
-		</script>
-	
-	</body>
-
+		});
+	</script>
+</body>
 </html>
