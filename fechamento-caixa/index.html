@@ -35,33 +35,61 @@
 							<table id="example" class="table table-striped table-bordered table-hover text-center" cellspacing="0" width="100%">
 								<thead>
 									<tr>
-										<th>Solicitação</th>
-										<th>Dia</th>
-										<th>Data da Competência</th>
 										<th>Garagem</th>
-										<th>Qt SEM PARAR</th>
+										<th>Dia</th>
+										<th>Recebimento</th>
+										<th>Qtd Cancelas</th>
+										<th>Vl Cancelas</th>
+										<th>Qtd WPS</th>
+										<th>Vl WPS</th>
+										<th>Qtd Moto</th>
+										<th>Vl Moto</th>
+										<th>Qtd Mensalista</th>
+										<th>Vl Mensalista</th>
+										<th>Vl 2ª Via Cartão</th>
+										<th>Qtd SEM PARAR</th>
 										<th>Vl SEM PARAR</th>
-										<th>Qt ConnectCar</th>
-										<th>Vl ConnectCar</th>
-										<th>Total Tags</th>
-										<th>Início</th>
-										<th>Término</th>
+										<th>Data Pgto SEM PARAR</th>
+										<th>Recebido SEM PARAR</th>
+										<th>Qt Convênio</th>
+										<th>Vl Convênio</th>
+										<th>Qt Avulso</th>
+										<th>Vl Avulso</th>
+										<th>Qt Isento</th>
+										<th>Vl Isento</th>
+										<th>Qtd Diária</th>
+										<th>Vl Diária</th>
+										<th>Nº FEC</th>
 									</tr>
 								</thead>
 								<tbody id="corpoTabela"></tbody>
 								<tfoot>
 									<tr>
-										<th>Solicitação</th>
-										<th>Dia</th>
-										<th>Data da Competência</th>
 										<th>Garagem</th>
-										<th>Qt SEM PARAR</th>
+										<th>Dia</th>
+										<th>Recebimento</th>
+										<th>Qtd Cancelas</th>
+										<th>Vl Cancelas</th>
+										<th>Qtd WPS</th>
+										<th>Vl WPS</th>
+										<th>Qtd Moto</th>
+										<th>Vl Moto</th>
+										<th>Qtd Mensalista</th>
+										<th>Vl Mensalista</th>
+										<th>Vl 2ª Via Cartão</th>
+										<th>Qtd SEM PARAR</th>
 										<th>Vl SEM PARAR</th>
-										<th>Qt ConnectCar</th>
-										<th>Vl ConnectCar</th>
-										<th>Total Tags</th>
-										<th>Início</th>
-										<th>Término</th>
+										<th>Data Pgto SEM PARAR</th>
+										<th>Recebido SEM PARAR</th>
+										<th>Qt Convênio</th>
+										<th>Vl Convênio</th>
+										<th>Qt Avulso</th>
+										<th>Vl Avulso</th>
+										<th>Qt Isento</th>
+										<th>Vl Isento</th>
+										<th>Qtd Diária</th>
+										<th>Vl Diária</th>
+										<th>Nº FEC</th>
 									</tr>
 								</tfoot>
 							</table>
@@ -81,6 +109,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js" charset="utf-8"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js" charset="utf-8"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.html5.min.js" charset="utf-8"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.colVis.min.js" charset="utf-8"></script>
 	
 	<script>
 		'use strict'
@@ -100,25 +129,45 @@
 		// dados
 		let data = [];
 		
-		for(let i = 0; i < 201; i++) {
+		for(let i = 0; i < 51; i++) {
 			data.push([
-				Math.floor(Math.random() * 100000) + 1,
-				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
-				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
 				['Garagem 1 LTDA', 'Garagem 2 LTDA', 'Garagem 3 LTDA', 'Garagem 4 LTDA'][Math.floor(Math.random() * 3) + 1],
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
+				['Dinheiro', 'Crédito Visa', 'Débito Master', 'Crédito Amex', 'Débito Elo'][Math.floor(Math.random() * 3) + 1],
+				(Math.floor(Math.random() * 500)),
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				(Math.floor(Math.random() * 500)),
+				'R$' + (Math.floor(Math.random() * 9500) + 500) + ',00',
+				(Math.floor(Math.random() * 500)),
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
 				(Math.floor(Math.random() * 9500) + 500),
-				'R$ ' + (Math.floor(Math.random() * 49000) + 1000) + ',00',
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
 				(Math.floor(Math.random() * 9500) + 500),
-				'R$ ' + (Math.floor(Math.random() * 49000) + 1000) + ',00',
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
 				(Math.floor(Math.random() * 19000) + 1000),
 				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017',
-				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 5) + 7).pad(2) + '/2017'
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				(Math.floor(Math.random() * 500) + 500),
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				(Math.floor(Math.random() * 500) + 500),
+				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
+				(Math.floor(Math.random() * 500) + 500),
+				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
+				(Math.floor(Math.random() * 500) + 500),
+				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
+				(Math.floor(Math.random() * 500) + 500),
+				(Math.floor(Math.random() * 1960) + 40)
 			]);
 		}
 		
 		var table = $('#example').DataTable({
 			dom: 'Bfrtip',
+			stateSave: true,
 			buttons: [
+				{
+					extend: 'colvis',
+					text: 'Colunas'
+				},
 				'copyHtml5',
 				'excelHtml5',
 				'csvHtml5',
