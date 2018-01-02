@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
 
 <body>
@@ -36,14 +37,9 @@
 								<thead>
 									<tr>
 										<th>Garagem</th>
-										<th>Dia</th>
+										<th data-date-range>Dia</th>
 										<th>Recebimento</th>
-										<th>Qtd Cancelas</th>
-										<th>Vl Cancelas</th>
-										<th>Qtd WPS</th>
-										<th>Vl WPS</th>
-										<th>Qtd Moto</th>
-										<th>Vl Moto</th>
+										<th>Caixa</th>
 										<th>Qtd Mensalista</th>
 										<th>Vl Mensalista</th>
 										<th>Vl 2ª Via Cartão</th>
@@ -51,12 +47,13 @@
 										<th>Vl SEM PARAR</th>
 										<th>Data Pgto SEM PARAR</th>
 										<th>Recebido SEM PARAR</th>
-										<th>Qt Convênio</th>
+										<th>Qtd ConnectCar</th>
+										<th>Vl ConnectCar</th>
+										<th>Recebido ConnectCar</th>
 										<th>Vl Convênio</th>
 										<th>Qt Avulso</th>
 										<th>Vl Avulso</th>
 										<th>Qt Isento</th>
-										<th>Vl Isento</th>
 										<th>Qtd Diária</th>
 										<th>Vl Diária</th>
 										<th>Nº FEC</th>
@@ -66,14 +63,9 @@
 								<tfoot>
 									<tr>
 										<th>Garagem</th>
-										<th>Dia</th>
+										<th data-date-range>Dia</th>
 										<th>Recebimento</th>
-										<th>Qtd Cancelas</th>
-										<th>Vl Cancelas</th>
-										<th>Qtd WPS</th>
-										<th>Vl WPS</th>
-										<th>Qtd Moto</th>
-										<th>Vl Moto</th>
+										<th>Caixa</th>
 										<th>Qtd Mensalista</th>
 										<th>Vl Mensalista</th>
 										<th>Vl 2ª Via Cartão</th>
@@ -81,12 +73,13 @@
 										<th>Vl SEM PARAR</th>
 										<th>Data Pgto SEM PARAR</th>
 										<th>Recebido SEM PARAR</th>
-										<th>Qt Convênio</th>
+										<th>Qtd ConnectCar</th>
+										<th>Vl ConnectCar</th>
+										<th>Recebido ConnectCar</th>
 										<th>Vl Convênio</th>
 										<th>Qt Avulso</th>
 										<th>Vl Avulso</th>
 										<th>Qt Isento</th>
-										<th>Vl Isento</th>
 										<th>Qtd Diária</th>
 										<th>Vl Diária</th>
 										<th>Nº FEC</th>
@@ -101,6 +94,7 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js" charset="utf-8"></script>
@@ -110,6 +104,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js" charset="utf-8"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.html5.min.js" charset="utf-8"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.colVis.min.js" charset="utf-8"></script>
+	<script src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 	
 	<script>
 		'use strict'
@@ -132,28 +127,36 @@
 		for(let i = 0; i < 51; i++) {
 			data.push([
 				['Garagem 1 LTDA', 'Garagem 2 LTDA', 'Garagem 3 LTDA', 'Garagem 4 LTDA'][Math.floor(Math.random() * 3) + 1],
-				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017 a ' + (Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 12) + 1).pad(2) + '/2017',
 				['Dinheiro', 'Crédito Visa', 'Débito Master', 'Crédito Amex', 'Débito Elo'][Math.floor(Math.random() * 3) + 1],
-				(Math.floor(Math.random() * 500)),
-				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
-				(Math.floor(Math.random() * 500)),
-				'R$' + (Math.floor(Math.random() * 9500) + 500) + ',00',
-				(Math.floor(Math.random() * 500)),
-				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				(Math.floor(Math.random() * 9500) + 500),
+				
+				// Mensalista
 				(Math.floor(Math.random() * 9500) + 500),
 				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				
+				// Via Cartão
 				(Math.floor(Math.random() * 9500) + 500),
+				
+				// SEM PARAR
 				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
 				(Math.floor(Math.random() * 19000) + 1000),
 				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017',
 				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				
+				// ConnectCar
+				(Math.floor(Math.random() * 19000) + 1000),
+				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
+				(Math.floor(Math.random() * 19000) + 1000),
+				
 				(Math.floor(Math.random() * 500) + 500),
+				(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017',
 				'R$' + (Math.floor(Math.random() * 500) + 500) + ',00',
 				(Math.floor(Math.random() * 500) + 500),
-				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
 				(Math.floor(Math.random() * 500) + 500),
 				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
 				(Math.floor(Math.random() * 500) + 500),
+				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
 				'R$' + (Math.floor(Math.random() * 9000) + 1000) + ',00',
 				(Math.floor(Math.random() * 500) + 500),
 				(Math.floor(Math.random() * 1960) + 40)
@@ -200,6 +203,11 @@
 		});
 
 		$('#example tfoot tr').insertAfter($('#example thead tr'));
+			
+		// date range picker
+		$(function() {
+			$('th[data-date-range]').daterangepicker();
+		});
 
 		// Apply the search
 		table.columns().every(function() {
