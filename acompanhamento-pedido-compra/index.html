@@ -1,114 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Acompanhamento Pedidos de Compra</title>
 
-	<title>Acompanhamento Pedidos de Compra</title>
+		<!-- Última versão CSS compilada e minificada -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.bootstrap.min.css">
+		
+		<style>
+			.circulo {
+				border-radius: 200px;
+				width: 10px; height: 10px;
+				position:relative;
+				top: 0; left: 0;
+				display: inline-block !important;
+			}
+			
+			table td, table th {
+				text-align: left;
+				white-space: nowrap;
+			}
+			
+			.circulo-success {
+				background-color: #5cb85c;
+			}
+			
+			.circulo-waiting {
+				background-color: #FFEB3B;
+			}
+			
+			.circulo-warning {
+				background-color: #f0ad4e;
+			}
+			
+			.circulo-danger {
+				background-color: #d9534f;
+			}
+			
+			.table-responsive {
+				padding: 44px 0 44px;
+			}
+			
+			.dataTables_info, .dataTables_paginate, .dt-buttons, .dataTables_filter {
+				position: absolute !important;
+			}
+			
+			.dataTables_paginate, .dataTables_filter {
+				right: 15px;
+			}
+			
+			.dataTables_filter, .dt-buttons {
+				margin-top: -44px;
+			}
+		</style>
+	</head>
 
-	<!-- Última versão CSS compilada e minificada -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.bootstrap.min.css">
-	
-	<style>
-		.circulo {
-			border-radius: 200px;
-			width: 10px; height: 10px;
-			position:relative;
-			top: 0; left: 0;
-			display: inline-block !important;
-		}
-		
-		table td {
-			text-align: left;
-		}
-		
-		.circulo-success {
-			background-color: #5cb85c;
-		}
-		
-		.circulo-waiting {
-			background-color: #FFEB3B;
-		}
-		
-		.circulo-warning {
-			background-color: #f0ad4e;
-		}
-		
-		.circulo-danger {
-			background-color: #d9534f;
-		}
-	</style>
-</head>
-
-<body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<img style="position: absolute; top: 15;" width="80" src="logo.png">
-				<h1 style="padding: 20px 0 20px 100px;">Pedidos de Compra</h1>
-			</div>
-		</div>
-		
-		<br>
-		
-		<div class="row">
-			<div class="col-md-12">
-				<div class="table-responsive">
-					<table id="example" class="table table-striped table-bordered table-hover text-center" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th width="5%">Pedido</th>
-								<th width="10%">Comprador</th>
-								<th width="15%">Fornecedor</th>
-								<th width="5%">Telefone</th>
-								<th width="5%">Emissão</th>
-								<th width="10%">E-mail</th>
-								<th width="30%">Situação</th>
-							</tr>
-						</thead>
-						<tbody id="corpoTabela"></tbody>
-						<tfoot>
-							<tr>
-								<th>Pedido</th>
-								<th>Comprador</th>
-								<th>Fornecedor</th>
-								<th>Telefone</th>
-								<th>Emissão</th>
-								<th>E-mail</th>
-								<th>Situação</th>
-							</tr>
-						</tfoot>
-					</table>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<img style="position: absolute; top: 15px;" width="80" src="logo.png">
+					<h1 style="padding: 20px 0 20px 100px;">Pedidos de Compra</h1>
 				</div>
-				<!-- /.table-responsive -->
 			</div>
-			<!-- /.col-md-12 -->
+			
+			<br>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-responsive">
+						<table id="example" class="table table-striped table-bordered table-hover text-center" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Tipo</th>
+									<th>Pedido</th>
+									<th>Fornecedor</th>
+									<th>Produto</th>
+									<th>Categoria</th>
+									<th>SLA PB</th>
+									<th>Quantidade</th>
+									<th>Centro de Custo / Filial</th>
+									<th>Data solicitação</th>
+									<th>Prazo do fornecedor</th>
+									<th>Limite para emissão do pedido</th>
+									<th>Pedido de compras</th>
+									<th>Limite para envio do pedido</th>
+									<th>Envio do pedido</th>
+									<th>Previsão de entrega</th>
+									<th>Limite para entrega</th>
+									<th>Entrega real</th>
+									<th>Acompanhamento de entrega</th>
+									<th>Tempo total</th>
+									<th>Status</th>
+									<th>SLA cumprido?</th>
+									<th>Compra emergencial?</th>
+									<th>Justificativa</th>
+									<th>Solicitante</th>
+									<th>Comprador</th>
+								</tr>
+							</thead>
+							<tbody id="corpoTabela"></tbody>
+							<tfoot>
+								<tr>
+									<th>Tipo</th>
+									<th>Pedido</th>
+									<th>Fornecedor</th>
+									<th>Produto</th>
+									<th>Categoria</th>
+									<th>SLA PB</th>
+									<th>Quantidade</th>
+									<th>Centro de Custo / Filial</th>
+									<th>Data solicitação</th>
+									<th>Prazo do fornecedor</th>
+									<th>Limite para emissão do pedido</th>
+									<th>Pedido de compras</th>
+									<th>Limite para envio do pedido</th>
+									<th>Envio do pedido</th>
+									<th>Previsão de entrega</th>
+									<th>Limite para entrega</th>
+									<th>Entrega real</th>
+									<th>Acompanhamento de entrega</th>
+									<th>Tempo total</th>
+									<th>Status</th>
+									<th>SLA cumprido?</th>
+									<th>Compra emergencial?</th>
+									<th>Justificativa</th>
+									<th>Solicitante</th>
+									<th>Comprador</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<!-- /.table-responsive -->
+				</div>
+				<!-- /.col-md-12 -->
+			</div>
+			<!-- /.row -->
+			</div>
 		</div>
-		<!-- /.row -->
-		</div>
-		
-		
-	</div>
-	<!-- /.container-fluid -->
+		<!-- /.container-fluid -->
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js" charset="utf-8"></script>
-	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.bootstrap.min.js" charset="utf-8"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" charset="utf-8"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js" charset="utf-8"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js" charset="utf-8"></script>
-	<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.html5.min.js" charset="utf-8"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js" charset="utf-8"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.bootstrap.min.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js" charset="utf-8"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.0/js/buttons.html5.min.js" charset="utf-8"></script>
 
-	<script>
+		<script>
+			var data = [];
+		
 			Number.prototype.pad = function(size) {
 				let s = String(this);
 				while (s.length < (size || 2)) {s = "0" + s;}
@@ -120,27 +172,86 @@
 				var title = $(this).text();
 				$(this).html('<input type="text" style="width: 100%;" class="form-control">');
 			});
-
-			data = []
+			
 			for(let i = 0; i < 15; i++) {
 				let indiceFornecedor = Math.floor(Math.random() * 3);
-				data.push([					
-					Math.floor(Math.random() * 100000) + 1,
-					['JOSIAS CARMO', 'RODRIGO PEIXOTO', 'ANA LUISA', 'MARIA SILVA'][Math.floor(Math.random() * 4)],
-					['SUPRICORP SUPRIMENTOS LTDA', 'IVTS SOLUÇÕES E SISTEMAS', 'GARAGEM 1 LTDA'][indiceFornecedor],
-					'(11)' + (Math.floor(Math.random() * 79999999) + 20000000),
-					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017',
-					['olive@supricorp.com.br', 'grad@ivts.com.br', 'canvas@garagem1.com.br'][indiceFornecedor],
-					['<div class="circulo circulo-success"></div> RONIE.COELHO - Aprovado<br>',
-					'<div class="circulo circulo-waiting"></div> SUELI.CARNEIRO - Aguardando<br>',
-					'<div class="circulo circulo-warning"></div> MARTA.RODRIGUES - Em Aprovacao<br>',
-					'<div class="circulo circulo-danger"></div> RAFAEL.SOUZA - Reprovado - <span class="text-muted">Dados incorretos</span> <br>'
-					][Math.floor(Math.random() * 4)] + [
-					'',
-					'',
-					'<div class="circulo circulo-waiting"></div> MURILO.SILVA - Aguardando<br>',
-					'<div class="circulo circulo-warning"></div> MONICA.SANTANA - Em Aprovacao<br>',
-					][Math.floor(Math.random() * 4)]
+				
+				data.push([
+					['Compra', 'Regularização'][Math.floor(Math.random() * 2)], // tipo
+					Math.floor(Math.random() * 100000) + 1, // pedido
+					['SUPRICORP SUPRIMENTOS LTDA', 'IVTS SOLUÇÕES E SISTEMAS', 'GARAGEM 1 LTDA'][indiceFornecedor], // fornecedor
+					[
+						'SUPORTE PARA TV - MOVEIS E UTENSILIOS - 15 DIAS',
+						'SUPORTE PEITORAL PARA GOPRO - SEGURANCA E MONITORAMENTO - SLA 15 DIAS',
+						'LAMPADA LED - MANUTEN. DE INSTALACOES PREDIAL - SLA 15 DIAS',
+						'CONE DE SINALIZACAO - COMUNICACAO VISUAL E SINALIZAC - SLA IMEDIATA',
+						'VOUCHER NUMERADO - COMUNICACAO VISUAL E SINALIZAC - SLA IMEDIATA',
+						'EPA PAGUE FACIL - EQUIPA. DE AUTOMACAO OFFSTREET - SLA 3 DIAS',
+						'CARTÃO PROXIMIDADE ACURA - MATERIAL DE ESCRITORIO - SLA 15 DIAS',
+						'CAPA PARA CHUVA - EQUIPA. DE PROTECAO INDIVIDUAL - SLA 15 DIAS',
+						'AR CONDICIONADO JANELA 30KBTUS - MANUTEN. DE INSTALACOES PREDIAL - SLA 15 DIAS',
+						'BOBINA 80MM X 40MM - BOBINA - SLA 15 DIAS',
+						'BOBINA 058MM X 240M 1V R-16 - MATERIAL DE ESCRITORIO - SLA 15 DIAS',
+						'BOBINA 76MM X 365M 1V KPH856 - MATERIAL DE ESCRITORIO - SLA 15 DIAS',
+						'BOBINA 76X660 KPH T.32MM - MATERIAL DE ESCRITORIO - SLA 15 DIASv',
+						'CARTUCHO HP 954 PRETO - HARDWARE E INFRA DE INFORMATIC - SLA 15 DIAS',
+						'CARTUCHO HP 954 MAGENTA - HARDWARE E INFRA DE INFORMATIC - SLA 15 DIAS',
+						'CARTUCHO HP 954 CIANO - HARDWARE E INFRA DE INFORMATIC - SLA 15 DIAS',
+						'CARTUCHO HP 954 AMARELO - HARDWARE E INFRA DE INFORMATIC - SLA 15 DIAS',
+						'MANGUEIRA HELIFLIX 1" C/25MTS - SEGURANCA E MONITORAMENTO - SLA 15 DIAS',
+						'TICKET BRANCO SKIDATA - MATERIAL DE ESCRITORIO - SLA 15 DIAS',
+						'MONITOR LED 15,6" - HARDWARE E INFRA DE INFORMATIC - SLA 15 DIAS',
+						'PAYSTATION - EQUIPA. DE AUTOMACAO OFFSTREET - SLA 3 DIAS',
+						'LICENCA DE USO SOFTWARE - EQUIPA. DE AUTOMACAO OFFSTREET - SLA 3 DIAS',
+						'AR CONDICIONADO SPLIT 18K BTUS - MANUTEN. DE INSTALACOES PREDIAL - SLA 15 DIAS',
+						'AUXILIAR DE PARTIDA - MANUTEN. E OPERACAO DE VEICULO - SLA 3 DIAS',
+						'PATINS HIDRAULICO P/ VEICULO - MANUTEN. E OPERACAO DE VEICULO - SLA 3 DIAS',
+						'CADEIRA PARA CAIXA ALTA - MOVEIS E UTENSILIOS - SLA 15 DIAS',
+						'GARRAFA TERMICA 1L - ALIMENTICIOS - SLA NÃO APLICÁVEL',
+						'QUADRO DE AVISOS - MATERIAL DE ESCRITORIO - SLA 15 DIAS'
+					][Math.floor(Math.random() * 28)], // produto
+					[
+						'SLA PB',
+						'Quantidade',
+						'Centro de Custo / Filial',
+						'Data solicitação',
+						'Prazo do fornecedor',
+						'Limite para emissão do pedido',
+						'Pedido de compras',
+						'Limite para envio do pedido',
+						'Envio do pedido',
+						'Previsão de entrega',
+						'Limite para entrega',
+						'Entrega real',
+						'Acompanhamento de entrega',
+						'Tempo total',
+						'Status',
+						'SLA cumprido?',
+						'Compra emergencial?',
+						'Justificativa',
+						'Solicitante',
+						'Comprador'
+					][Math.floor(Math.random() * 20)],
+					[0, 15, 3][Math.floor(Math.random() * 3)], // SLA PB
+					[50, 900, '30 caixas', '50m', '1 unidade de 21 polegadas'][Math.floor(Math.random() * 5)], // quantidade
+					['CONFINS - PARE BEM', 'LIFE CENTER - PARE BEM', 'OSASCO - PARE BEM', 'LIFE CENTER - PARE BEM'][Math.floor(Math.random() * 4)], // Centro de custo / filial
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Data Solicitação
+					[0, 5, 2, 25][Math.floor(Math.random() * 4)], // Prazo fornecedor
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Limite emissão do pedido
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Pedido de compras
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Limite envio pedido
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Envio do pedido
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Previsão entrega
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Limite entrega
+					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Entrega real
+					['Concluído', 'Em progresso', '<b class="text-danger">FUP Requerido</b>'][Math.floor(Math.random() * 3)], // Acompanhamento entrega
+					[21, 32, 15, 'N/A'][Math.floor(Math.random() * 4)], // Tempo total
+					['Concluído', 'Pendente'][Math.floor(Math.random() * 2)], // Status
+					['Sim', 'Não', 'Em andamento'][Math.floor(Math.random() * 3)], // SLA cumprido
+					['Sim', 'Não'][Math.floor(Math.random() * 2)], // Compra emergencial
+					['Impressão de anexos via e-mail. Folhas de ponto, atualização de contatos etc', 'REPOSIÇÃO DE UNIFORME', 'Bobinas WPS', 'O contratante solicita 1.000 vouchers personalizado para o Makro'][Math.floor(Math.random() * 4)], // Justificativa
+					['ARETHA', 'RAFAEL FERREIRA', 'LEONARDO', 'ALEXSANDRA'][Math.floor(Math.random() * 4)], // Solicitante
+					['FABIO MARINHO', 'JOSIAS', 'RONIE', 'LAÍS NUNES'][Math.floor(Math.random() * 4)]
 				]);
 			}
 			
@@ -190,9 +301,6 @@
 					}
 				});
 			});
-			
 		</script>
-	
 	</body>
-
 </html>
