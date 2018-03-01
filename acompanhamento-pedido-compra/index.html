@@ -80,13 +80,15 @@
 							<thead>
 								<tr>
 									<th>Tipo</th>
-									<th>Pedido</th>
+									<th>N° Solicitação</th>
+									<th>Nº Pedido</th>
 									<th>Fornecedor</th>
 									<th>Produto</th>
 									<th>Categoria</th>
 									<th>SLA PB</th>
 									<th>Quantidade</th>
-									<th>Centro de Custo / Filial</th>
+									<th>Centro de custo / filial</th>
+									<th>Região</th>
 									<th>Data solicitação</th>
 									<th>Prazo do fornecedor</th>
 									<th>Limite para emissão do pedido</th>
@@ -96,27 +98,28 @@
 									<th>Previsão de entrega</th>
 									<th>Limite para entrega</th>
 									<th>Entrega real</th>
-									<th>Acompanhamento de entrega</th>
-									<th>Tempo total</th>
 									<th>Status</th>
 									<th>SLA cumprido?</th>
+									<th>Tempo total</th>
 									<th>Compra emergencial?</th>
-									<th>Justificativa</th>
 									<th>Solicitante</th>
 									<th>Comprador</th>
+									<th>Justificativa</th>
 								</tr>
 							</thead>
 							<tbody id="corpoTabela"></tbody>
 							<tfoot>
 								<tr>
 									<th>Tipo</th>
-									<th>Pedido</th>
+									<th>N° Solicitação</th>
+									<th>Nº Pedido</th>
 									<th>Fornecedor</th>
 									<th>Produto</th>
 									<th>Categoria</th>
 									<th>SLA PB</th>
 									<th>Quantidade</th>
 									<th>Centro de Custo / Filial</th>
+									<th>Região</th>
 									<th>Data solicitação</th>
 									<th>Prazo do fornecedor</th>
 									<th>Limite para emissão do pedido</th>
@@ -126,14 +129,13 @@
 									<th>Previsão de entrega</th>
 									<th>Limite para entrega</th>
 									<th>Entrega real</th>
-									<th>Acompanhamento de entrega</th>
-									<th>Tempo total</th>
 									<th>Status</th>
 									<th>SLA cumprido?</th>
+									<th>Tempo total</th>
 									<th>Compra emergencial?</th>
-									<th>Justificativa</th>
 									<th>Solicitante</th>
 									<th>Comprador</th>
+									<th>Justificativa</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -178,6 +180,7 @@
 				
 				data.push([
 					['Compra', 'Regularização'][Math.floor(Math.random() * 2)], // tipo
+					Math.floor(Math.random() * 100000) + 1, // nº solicitação
 					Math.floor(Math.random() * 100000) + 1, // pedido
 					['SUPRICORP SUPRIMENTOS LTDA', 'IVTS SOLUÇÕES E SISTEMAS', 'GARAGEM 1 LTDA'][indiceFornecedor], // fornecedor
 					[
@@ -235,6 +238,7 @@
 					[0, 15, 3][Math.floor(Math.random() * 3)], // SLA PB
 					[50, 900, '30 caixas', '50m', '1 unidade de 21 polegadas'][Math.floor(Math.random() * 5)], // quantidade
 					['CONFINS - PARE BEM', 'LIFE CENTER - PARE BEM', 'OSASCO - PARE BEM', 'LIFE CENTER - PARE BEM'][Math.floor(Math.random() * 4)], // Centro de custo / filial
+					['Região 01', 'Região 02', 'Região 03', 'Região 04'][Math.floor(Math.random() * 4)], // Centro de custo / filial
 					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Data Solicitação
 					[0, 5, 2, 25][Math.floor(Math.random() * 4)], // Prazo fornecedor
 					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Limite emissão do pedido
@@ -244,14 +248,13 @@
 					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Previsão entrega
 					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Limite entrega
 					(Math.floor(Math.random() * 31) + 1).pad(2) + '/' + (Math.floor(Math.random() * 6) + 1).pad(2) + '/2017', // Entrega real
-					['Concluído', 'Em progresso', '<b class="text-danger">FUP Requerido</b>'][Math.floor(Math.random() * 3)], // Acompanhamento entrega
-					[21, 32, 15, 'N/A'][Math.floor(Math.random() * 4)], // Tempo total
-					['Concluído', 'Pendente'][Math.floor(Math.random() * 2)], // Status
+					['Concluído', 'Pendente', 'Em aprovação', 'Ag. entrega'][Math.floor(Math.random() * 4)], // Status
 					['Sim', 'Não', 'Em andamento'][Math.floor(Math.random() * 3)], // SLA cumprido
+					[21, 32, 15, 'N/A'][Math.floor(Math.random() * 4)], // Tempo total
 					['Sim', 'Não'][Math.floor(Math.random() * 2)], // Compra emergencial
-					['Impressão de anexos via e-mail. Folhas de ponto, atualização de contatos etc', 'REPOSIÇÃO DE UNIFORME', 'Bobinas WPS', 'O contratante solicita 1.000 vouchers personalizado para o Makro'][Math.floor(Math.random() * 4)], // Justificativa
 					['ARETHA', 'RAFAEL FERREIRA', 'LEONARDO', 'ALEXSANDRA'][Math.floor(Math.random() * 4)], // Solicitante
-					['FABIO MARINHO', 'JOSIAS', 'RONIE', 'LAÍS NUNES'][Math.floor(Math.random() * 4)]
+					['FABIO MARINHO', 'JOSIAS', 'RONIE', 'LAÍS NUNES'][Math.floor(Math.random() * 4)],
+					['Impressão de anexos via e-mail. Folhas de ponto, atualização de contatos etc', 'REPOSIÇÃO DE UNIFORME', 'Bobinas WPS', 'O contratante solicita 1.000 vouchers personalizado para o Makro'][Math.floor(Math.random() * 4)] // Justificativa
 				]);
 			}
 			
