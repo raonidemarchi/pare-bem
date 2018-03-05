@@ -202,21 +202,36 @@
 				<hr>
 				
 				<h3>Mecanismo de aprovação</h3>
-				<br>
+				
    				<div class="row">
+					<div class="col-xs-12 form-group">
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+								Custo ativo
+							</label>
+						
+							<label class="radio-inline">
+								<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+								Despesa
+							</label>
+						</div>
+					</div>
+				
 					<div class="col-xs-12 form-group">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default">
 								<input type="radio"	name="aprovar" id="aprovado" value="1">
 								Aprovado
 							</label>
+							
 							<label class="btn btn-default">
 								<input type="radio" name="aprovar" id="reprovado" value="2">
 								Reprovado
 							</label>
 						</div>
 					</div>
-
+					
 					<div id="justificativaDiv" class="col-xs-12" hidden>
 						<label for="justificativa">Justificativa</label>
 						<textarea name="justificativa" id="justificativa" rows="6" class="form-control" hidden></textarea>
